@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1b1b1b;
+  color: #ffffff;
+}
+
+
+/*! CSS Used from: Embedded */
+:focus:not([data-focusvisible-polyfill]) {
+  outline: none;
+}
+
+.r-4qtqp9 {
+  display: inline-block;
+}
+
+.r-yyyyoo {
+  fill: currentcolor;
+}
+
+.r-1xvli5t {
+  height: 2.25em;
+}
+
+.r-dnmrzs {
+  max-width: 100%;
+}
+
+.r-bnwqim {
+  position: relative;
+}
+
+.r-1plcrui {
+  vertical-align: text-bottom;
+}
+
+.r-lrvibr {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(117, 117, 117);
+  border-radius: 16px;
+  height: 100px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 16px;
+  background-color: black;
+}
