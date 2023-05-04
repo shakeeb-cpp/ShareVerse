@@ -7,12 +7,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
-const followers = () => {
+const Followers = () => {
 
     const [profiles, setprofiles] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
 
     const router = useRouter();
+    const { asPath: pathname } = router;
+
     const userId = router.query.id;
 
     const session = useSession();
@@ -44,6 +46,8 @@ const followers = () => {
                 }
 
             });
+
+        // console.log('pathname',pathname.replace('followers','profile'))
     }, [userId]);
 
 
@@ -65,7 +69,7 @@ const followers = () => {
                         <input
                             className='border rounded-3xl px-2 py-1 outline-none md:w-64 '
                             type="text"
-                            name="search" z
+                            name="search"
                             placeholder="Search users ..."
                         />
                         <button type='submit' className='py-[5px] rounded-r-3xl md:px-3 md:pl-4 px-2 absolute right-0 text-white bg-blue-500 z-10 md:hover:bg-blue-600 '>
@@ -79,15 +83,14 @@ const followers = () => {
 
                     <div className="grid md:grid-cols-2  ">
                         {!isUploading && profiles?.length > 0 && profiles?.map(profile => (
-                            <div className='flex items-start gap-3 pr-6 my-2  rounded-full'>
+                            <div key={profile.id} className='flex items-start gap-3 pr-6 my-2  rounded-full'>
                                 <div>
-                                    <Link href={'profile/' + profile.id}>
+                                    <Link href={`${pathname.replace('followers/' + userId, 'profile/' + profile.id)}`}>
                                         <Avatar url={profile.avatar} />
                                     </Link>
                                 </div>
                                 <div className=''>
-
-                                    <Link href={'profile/' + profile.id} className='cursor-pointer hover:underline underline-offset-2 md:text-md leading-6 text-lg  font-semibold'>
+                                    <Link href={`${pathname.replace('followers/' + userId, 'profile/' + profile.id)}`} className='cursor-pointer hover:underline underline-offset-2 md:text-md leading-6 text-lg  font-semibold'>
                                         {profile?.name || 'No Username'}
                                     </Link>
 
@@ -118,8 +121,8 @@ const followers = () => {
                     )}
                 </div>
             </Card>
-        </Layout>
+        </Layout >
     )
 }
 
-export default followers
+export default Followers

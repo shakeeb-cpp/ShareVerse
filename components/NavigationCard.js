@@ -198,7 +198,7 @@ const NavigationCard = () => {
                                     notify?.map(profile => (
                                         isFollow?.map(follow => (
                                             follow?.id === profile?.my_id && (
-                                                <span className='absolute md:left-[41px]  border-2 border-black left-7 md:top-[9px] top-1 bg-red-500 text-white rounded-3xl p-0 px-1 text-[9px]'>{notify?.length + reports?.length}</span>
+                                                <span key={follow.id} className='absolute md:left-[41px]  border-2 border-black left-7 md:top-[9px] top-1 bg-red-500 text-white rounded-3xl p-0 px-1 text-[9px]'>{notify?.length + reports?.length}</span>
                                             )
                                         ))
 

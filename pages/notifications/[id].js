@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import Preloader from '@/components/Preloader'
 
 
-const notifications = () => {
+const Notifications = () => {
 
     const [notify, setNotify] = useState([]);
     const [reports, setReports] = useState([]);
@@ -24,6 +24,8 @@ const notifications = () => {
     const session = useSession();
 
     const router = useRouter();
+    const { asPath: pathname } = router;
+
     const userId = router.query.id;
 
     useEffect(() => {
@@ -144,42 +146,42 @@ const notifications = () => {
                     )}
                     {!isUploading &&
                         notify?.length > 0 ?
-                            (<>
-                                {notify?.map(profile => (
-                                    isFollow.map(follow => (
-                                        follow.id === profile.my_id && (
-                                            <div className=' relative'>
-                                                <div className='absolute md:top-[4px] top-[3px] right-6 z-10'>
-                                                    <button className=' hover:bg-slate-700 bg-gray-500 rounded-full text-white text-sm py-0 px-[6px] ' onClick={() => deleteNotify(profile.id)}>X</button>
+                        (<>
+                            {notify?.map(profile => (
+                                isFollow.map(follow => (
+                                    follow.id === profile.my_id && (
+                                        <div key={profile.my_id} className=' relative'>
+                                            <div className='absolute md:top-[4px] top-[3px] right-6 z-10'>
+                                                <button className=' hover:bg-slate-700 bg-gray-500 rounded-full text-white text-sm py-0 px-[6px] ' onClick={() => deleteNotify(profile.id)}>X</button>
+                                            </div>
+                                            <div className='flex items-center gap-3 my-4 cursor-pointer bg-[#131313]  rounded-full  relative' >
+                                                <div>
+                                                    <Link href={`${pathname.replace('notifications/' + userId, 'profile/' + profile.my_id)}`} >
+                                                        <Avatar url={profile.avatar} size={'md'} />
+                                                    </Link>
                                                 </div>
-                                                <div className='flex items-center gap-3 my-4 cursor-pointer bg-[#131313]  rounded-full  relative' >
-                                                    <div>
-                                                        <Link href={'profile/' + profile.my_id}>
-                                                            <Avatar url={profile.avatar} size={'md'} />
+                                                <div className=''>
+                                                    <div className=' flex items-center gap-2'>
+                                                        <Link href={`${pathname.replace('notifications/' + userId, 'profile/' + profile.my_id)}`} className='cursor-pointer hover:underline underline-offset-2 md:text-lg leading-[26px] text-lg  font-semibold'>
+                                                            {profile?.name || 'No Username'}
                                                         </Link>
+                                                        <p className="text-sm text-gray-400">
+                                                            <ReactTimeAgo timeStyle={'twitter'} date={profile.created_at} />
+                                                        </p>
                                                     </div>
-                                                    <div className=''>
-                                                        <div className=' flex items-center gap-2'>
-                                                            <Link href={'profile/' + profile.my_id} className='cursor-pointer hover:underline underline-offset-2 md:text-lg leading-[26px] text-lg  font-semibold'>
-                                                                {profile?.name || 'No Username'}
-                                                            </Link>
-                                                            <p className="text-sm text-gray-400">
-                                                                <ReactTimeAgo timeStyle={'twitter'} date={profile.created_at} />
-                                                            </p>
-                                                        </div>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <p className='text-base font-semibold'>upload a new post: <span className='text-base font-normal text-gray-300'>{profile.message?.slice(0, 16)} ...</span></p>
-                                                        </div>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <p className='text-base font-semibold'>upload a new post: <span className='text-base font-normal text-gray-300'>{profile.message?.slice(0, 16)} ...</span></p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        )
-                                    ))
+                                        </div>
+                                    )
+                                ))
 
-                                ))}
-                            </>)
-                            :
-                            ''
+                            ))}
+                        </>)
+                        :
+                        ''
                     }
                     {/* report */}
 
@@ -217,4 +219,4 @@ const notifications = () => {
     )
 }
 
-export default notifications
+export default Notifications

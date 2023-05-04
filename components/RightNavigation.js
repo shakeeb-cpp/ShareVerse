@@ -228,7 +228,7 @@ const RightNavigation = () => {
                     )
                     }
 
-                    {!isUploading && suggest?.length > 3 && (
+                    {!isUploading && suggest?.length > 0 && (
                         <div className='flex absolute bottom-[1px] right-3  justify-start'>
                             <Link className=' text-socialBlue hover:text-blue-700' href={'/suggested/' + session?.user?.id}>show more</Link>
                         </div>

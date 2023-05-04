@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 
-const tagposts = () => {
+const Tagposts = () => {
   const router = useRouter()
   const { tags } = router.query
   const [posts, setPosts] = useState([]);
@@ -89,4 +89,4 @@ const tagposts = () => {
   )
 }
 
-export default tagposts
+export default Tagposts

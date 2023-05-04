@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
-const suggested = () => {
+const Suggested = () => {
 
     const [profiles, setprofiles] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
@@ -15,11 +15,12 @@ const suggested = () => {
     const [suggest, setSuggest] = useState([]);
 
     const router = useRouter();
+    const { asPath: pathname } = router;
     const userId = router.query.id;
 
     const session = useSession();
     const supabase = useSupabaseClient();
-    
+
     useEffect(() => {
         if (!session?.user?.id) {
             return;
@@ -79,15 +80,15 @@ const suggested = () => {
                     <h1 className="md:text-5xl text-4xl mb-6 text-gray-300">Suggested</h1>
                     <div className="grid md:grid-cols-2  ">
                         {!isUploading && session?.user?.id && suggest?.map(profile => (
-                            <div className='flex items-start gap-3 my-2 pr-6'>
+                            <div key={profile.id} className='flex items-start gap-3 my-2 pr-6'>
                                 <div>
-                                    <Link href={'profile/' + profile.id}>
+                                    <Link href={`${pathname.replace('suggested/' + userId, 'profile/' + profile.id)}`}>
                                         <Avatar url={profile.avatar} />
                                     </Link>
                                 </div>
                                 <div className=''>
                                     <h1 className="md:text-xl text-lg  font-semibold">
-                                        <Link href={'profile/' + profile.id} className='cursor-pointer hover:underline underline-offset-2'>
+                                        <Link href={`${pathname.replace('suggested/' + userId, 'profile/' + profile.id)}`} className='cursor-pointer hover:underline underline-offset-2'>
                                             {profile?.name || 'No Username'}
                                         </Link>
                                     </h1>
@@ -111,4 +112,4 @@ const suggested = () => {
     )
 }
 
-export default suggested
+export default Suggested

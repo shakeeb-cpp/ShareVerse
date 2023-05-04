@@ -5,10 +5,11 @@ import Layout from '@/components/Layout';
 import Preloader from '@/components/Preloader';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import ReactTimeAgo from 'react-time-ago';
 
-const messages = () => {
+const Messages = () => {
 
     const [myProfile, setMyProfile] = useState(null);
     const [sendMessage, setSendMessage] = useState('');
@@ -27,9 +28,13 @@ const messages = () => {
     const supabase = useSupabaseClient();
     const session = useSession();
 
+    const router = useRouter();
+    const { asPath: pathname } = router;
+
+    const userId = router.query.id;
+
+
     useEffect(() => {
-
-
 
         if (!session?.user?.id) {
             return;
@@ -233,13 +238,13 @@ const messages = () => {
                         </div>
                         <div className='flex items-center gap-1 my-2 mb-3 rounded-full p-0 bg-[#131313] text-white cursor-pointer w-[215px] flex-wrap relative '>
                             <div>
-                                <Link href={'profile/' + authorProfile} >
+                                <Link href={`${pathname.replace('messages/' + userId, 'profile/' + authorProfile)}`} >
                                     <Avatar url={avatar} />
                                 </Link>
                             </div>
                             <div className=''>
                                 <h1 className="md:text-lg  text-lg text-white font-semibold">
-                                    <Link href={'profile/' + authorProfile} className='cursor-pointer hover:underline underline-offset-2'>
+                                    <Link href={`${pathname.replace('messages/' + userId, 'profile/' + authorProfile)}`} className='cursor-pointer hover:underline underline-offset-2'>
                                         {name || 'No Username'}
                                     </Link>
                                 </h1>
@@ -298,4 +303,4 @@ const messages = () => {
     )
 }
 
-export default messages
+export default Messages

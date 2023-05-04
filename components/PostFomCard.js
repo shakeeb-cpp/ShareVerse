@@ -214,8 +214,8 @@ const PostFomCard = ({ onPost, posts }) => {
             <div className='flex flex-wrap gap-[13px] my-1 mt-2 items-start '>
                 {uploads.length > 0 && (
                     <div className="flex gap-2 relative  items-end">
-                        {uploads.map(upload => (
-                            <div className="" >
+                        {uploads.map((upload,idx) => (
+                            <div key={idx} className="" >
                                 <img src={upload} alt="" className="w-auto h-20 rounded-md" />
                             </div>
                         ))}
@@ -232,8 +232,8 @@ const PostFomCard = ({ onPost, posts }) => {
 
                 {videoFilePath.length > 0 && (
                     <div className="flex relative items-start">
-                        {videoFilePath.map(video => (
-                            <div className=' rounded-md overflow-hidden'>
+                        {videoFilePath.map((video,idx) => (
+                            <div key={idx} className=' rounded-md overflow-hidden'>
                                 <ReactPlayer url={video} width='auto' height='90px' controls={true} />
                             </div>
                         ))}

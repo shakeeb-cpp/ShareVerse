@@ -4,10 +4,11 @@ import Layout from '@/components/Layout';
 import Preloader from '@/components/Preloader';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import ReactTimeAgo from 'react-time-ago';
 
-const inbox = () => {
+const Inbox = () => {
 
     const [myProfile, setMyProfile] = useState(null);
     const [sendMessage, setSendMessage] = useState('');
@@ -26,6 +27,9 @@ const inbox = () => {
     const supabase = useSupabaseClient();
     const session = useSession();
 
+    const router = useRouter();
+    const { asPath: pathname } = router;
+    const userId = router.query.id;
 
 
     useEffect(() => {
@@ -201,7 +205,7 @@ const inbox = () => {
 
                 <div className={receivedMessage?.length > 0 ? ' h-full overflow-auto' : ' h-screen overflow-auto'}>
                     {isselect && receivedMessage?.map(profile => (
-                        <div className=''>
+                        <div key={profile.id} className=''>
                             {profile?.reply?.length > 0 && (
                                 <div className='flex gap-2 items-center ml-10 bg-[#222222] w-[fit-content] px-2 py-1 rounded-t-2xl border-t-2 border-blue-500'>
                                     <p className=' text-gray-300'><span className=' font-semibold text-gray-50'>Reply to : </span>{profile?.reply}</p>
@@ -209,13 +213,13 @@ const inbox = () => {
                             )}
                             <div className='flex items-center gap-3 mb-3 cursor-pointer bg-[#131313] rounded-full relative' >
                                 <div>
-                                    <Link href={'/messages/' + session?.user?.id}>
+                                    <Link href={`${pathname.replace('inbox/' + userId, 'messages/' + session?.user?.id)}`}>
                                         <Avatar url={profile.avatar} size={'md'} />
                                     </Link>
                                 </div>
                                 <div className='relative'>
                                     <div className=' flex items-center gap-2'>
-                                        <Link href={'/messages/' + session?.user?.id} className='cursor-pointer hover:underline underline-offset-2 md:text-lg text-lg  font-semibold'>
+                                        <Link href={`${pathname.replace('inbox/' + userId, 'messages/' + session?.user?.id)}`} className='cursor-pointer hover:underline underline-offset-2 md:text-lg text-lg  font-semibold'>
                                             {profile?.name || 'No Username'}
                                         </Link>
 
@@ -262,4 +266,4 @@ const inbox = () => {
     )
 }
 
-export default inbox
+export default Inbox

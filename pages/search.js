@@ -15,6 +15,7 @@ export default function SearchResults() {
     const [profile, setProfile] = useState(null);
     const [profiles, setProfiles] = useState(null);
     const [error, setError] = useState(false);
+    const [error2, setError2] = useState(false);
 
     const supabase = useSupabaseClient();
     const session = useSession();
@@ -50,7 +51,7 @@ export default function SearchResults() {
             setPosts(data || []);
             console.log('search', data)
             if (data?.length === 0) {
-                // setError(true)
+                setError(true)
             }
 
             supabase
@@ -67,14 +68,14 @@ export default function SearchResults() {
                         console.log('data', result.data)
                     }
                     if (result.data?.length === 0) {
-                        setError(true)
+                        setError2(true)
                     }
                 })
 
         }
 
         if (q) fetchSearchResults();
-    }, [q]);
+    }, [q,session?.user?.id]);
 
 
     const fetchPosts = () => {
@@ -92,17 +93,17 @@ export default function SearchResults() {
         <Layout>
             <div className='my-3 h-screen '>
                 {
-                    error ? (
+                    error && error2 ? (
                         <div className='flex justify-center'>
                             <h2 className=''>No search results found !</h2>
                         </div>
-                    ) : <h1 className='md:text-2xl text-xl text-gray-500 md:ml-4 ml-2 mb-4'>Search results for "{q}"</h1>
+                    ) : <h1 className='md:text-2xl text-xl text-gray-500 md:ml-4 ml-2 mb-4'>Search results for &quot;{q}&quot;</h1>
                 }
 
                 {profiles?.length > 0 && (
                     <div className={`grid md:grid-cols-2 px-4 py-2 bg-[${posts?.length > 0 ? '#0a0a0a':'#000'}] `}>
                         {profiles?.map(profile => (
-                            <div className='flex items-start gap-3 my-2 pr-6'>
+                            <div key={profile.id} className='flex items-start gap-3 my-2 pr-6'>
                                 <div>
                                     <Link href={'profile/' + profile.id}>
                                         <Avatar url={profile.avatar} />

@@ -7,12 +7,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
-const follows = () => {
+const Follows = () => {
 
     const [profiles, setprofiles] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
 
     const router = useRouter();
+    const { asPath: pathname } = router;
+    
     const userId = router.query.id;
 
     const session = useSession();
@@ -53,15 +55,15 @@ const follows = () => {
                     <h1 className="md:text-5xl text-4xl mb-6 text-gray-300">Followings</h1>
                     <div className="grid md:grid-cols-2  ">
                         {!isUploading && session?.user?.id && profiles?.map(profile => (
-                            <div className='flex items-start gap-3 my-2 pr-6'>
+                            <div key={profile.id} className='flex items-start gap-3 my-2 pr-6'>
                                 <div>
-                                    <Link href={'profile/' + profile.id}>
+                                    <Link href={`${pathname.replace('follows/' + userId,'profile/' + profile.id)}`}>
                                         <Avatar url={profile.avatar} />
                                     </Link>
                                 </div>
                                 <div className=''>
                                     <h1 className="md:text-xl text-lg  font-semibold">
-                                        <Link href={'profile/' + profile.id} className='cursor-pointer hover:underline underline-offset-2'>
+                                        <Link href={`${pathname.replace('follows/' + userId,'profile/' + profile.id)}`} className='cursor-pointer hover:underline underline-offset-2'>
                                             {profile?.name || 'No Username'}
                                         </Link>
                                     </h1>
@@ -90,4 +92,4 @@ const follows = () => {
     )
 }
 
-export default follows
+export default Follows

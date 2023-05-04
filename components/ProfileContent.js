@@ -68,8 +68,8 @@ export default function ProfileContent({ activeTab, userId }) {
                     {posts.length > 0 && posts.map(post =>
                         <>
                             <div className="grid md:grid-cols-2 gap-3 ">
-                                {post?.photos?.length > 1 && post.photos.map(photo => (
-                                    <img className="rounded-md w-full overflow-hidden h-full flex mx-auto shadow-md" src={photo} alt="img" />
+                                {post?.photos?.length > 1 && post.photos.map((photo,idx) => (
+                                    <img key={idx} className="rounded-md w-full overflow-hidden h-full flex mx-auto shadow-md" src={photo} alt="img" />
                                 ))}
                             </div>
                             <div className='grid grid-cols-1 md:gap-3 gap-2'>
@@ -88,15 +88,15 @@ export default function ProfileContent({ activeTab, userId }) {
                 <Card>
                     <div className="grid md:grid-cols-1 gap-3">
                         {posts.length > 0 && posts.map(post =>
-                            post?.video?.map(vid => (
-                                <div className='rounded-md overflow-hidden'>
+                            post?.video?.map((vid,idx) => (
+                                <div key={idx} className='rounded-md overflow-hidden'>
                                     <ReactPlayer url={vid} width='100%' height='100%' controls={true} />
                                 </div>
                             ))
                         )}
-                        {posts.map(post =>
+                        {posts.map((post,idx) =>
                             !isMyUser && post?.video?.length < 1 && (
-                                <div className="flex justify-center items-center">
+                                <div key={idx} className="flex justify-center items-center">
                                     <h1>This user have no videos yet !</h1>
                                 </div>
                             )
