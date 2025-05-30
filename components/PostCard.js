@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Avatar from './Avatar'
 import Card from './Card'
-import ClickOutHandler from 'react-clickout-handler'
 import Link from 'next/link'
 import ReactTimeAgo from 'react-time-ago'
 import { UserContext } from '@/contexts/UserContext'
